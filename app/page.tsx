@@ -1,6 +1,7 @@
 'use client';
 
 import BlogList from '@/components/BlogList';
+import Footer from '@/components/Footer';
 import Header from '@/components/Header'
 import React from 'react'
 
@@ -13,6 +14,9 @@ const Home = () => {
       <main>
         <BlogList />
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
   )
 }
