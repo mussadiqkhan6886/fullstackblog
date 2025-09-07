@@ -1,6 +1,6 @@
 'use client';
 
-import BlogItems from '@/components/BlogItems';
+import BlogList from '@/components/BlogList';
 import Header from '@/components/Header'
 import React from 'react'
 
@@ -11,7 +11,7 @@ const Home = () => {
         <Header />
       </header>
       <main>
-        <BlogItems />
+        <BlogList />
       </main>
     </>
   )
