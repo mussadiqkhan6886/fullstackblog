@@ -41,18 +41,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     </section>
     <article className='mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10'>
         <Image src={data.image} width={1280} height={720} alt={"poster hero image"} />
-        <h1 className='my-8 text-[26px] font-semibold'>Introduction: </h1>
         <p>{data.description}</p>
-        <h3 className="my-5 text-lg font-semibold">Step 1: Self</h3>
-        <p className='my-3'>before</p>
-        <h3 className="my-5 text-lg font-semibold">Step 1: Self</h3>
-        <p className='my-3'>before</p>
-        <h3 className="my-5 text-lg font-semibold">Step 1: Self</h3>
-        <p className='my-3'>before</p>
-        <h3 className="my-5 text-lg font-semibold">Step 1: Self</h3>
-        <p className='my-3'>before</p>
-        <h3 className="my-5 text-lg font-semibold">Step 1: Self</h3>
-        <p className='my-3'>before</p>
         <div className='my-24'>
             <p className='text-black font-semibold my-4'>Share this article on social media</p>
             <div className="flex">
