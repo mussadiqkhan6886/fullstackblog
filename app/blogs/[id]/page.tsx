@@ -41,7 +41,9 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     </section>
     <article className='mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10'>
         <Image src={data.image} width={1280} height={720} alt={"poster hero image"} />
-        <p>{data.description}</p>
+        <div className='blog-content' dangerouslySetInnerHTML={{__html: data.description}}>
+
+        </div>
         <div className='my-24'>
             <p className='text-black font-semibold my-4'>Share this article on social media</p>
             <div className="flex">
