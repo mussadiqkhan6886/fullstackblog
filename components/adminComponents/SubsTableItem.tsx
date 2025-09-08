@@ -1,6 +1,13 @@
 import React from 'react'
 
-const SubsTableItem = ({email, mongoId, date, handleDelete}) => {
+type Props = {
+    email: string
+    mongoId: number
+    date: number
+    handleDelete: (mongoId: number) => void
+}
+
+const SubsTableItem = ({email, mongoId, date, handleDelete}: Props) => {
 
     const emailDate = new Date(date)
 
