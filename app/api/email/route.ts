@@ -22,3 +22,10 @@ export async function POST(request: Request){
 
     return NextResponse.json({success: true, msg:"Email Subscribed"})
 }
+
+export async function DELETE(req: Request){
+    const { searchParams } = new URL(req.url)
+    const id = await searchParams.get("id")
+    await EmailModel.findByIdAndDelete(id)
+    return NextResponse.json({success: true, msg: "Email Deleted"})
+}
