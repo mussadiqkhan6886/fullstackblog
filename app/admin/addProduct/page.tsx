@@ -6,7 +6,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import axios from "axios"
 import {toast} from "react-toastify"
 
-const page = () => {
+const Page = () => {
 
   const [image, setImage] = useState<File | null>(null)
   const [data, setData] = useState({
@@ -83,4 +83,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

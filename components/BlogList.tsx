@@ -1,12 +1,22 @@
 'use client';
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BlogItem from './BlogItem'
-import { blog_data } from '@/assets/assets';
+import axios from 'axios';
 
 const BlogList = () => {
 
     const [menu, SetMenu] = useState<string>("All")
+    const [blogs, setBlogs] = useState<Data[]>([])
+
+    const fetchBlogs = async () => {
+      const response = await axios.get("/api/blog")
+      setBlogs(response.data.blogs)
+    }
+
+    useEffect(() => {
+      fetchBlogs()
+    }, [])
 
   return (
     <div>
@@ -17,8 +27,8 @@ const BlogList = () => {
         <button onClick={() => SetMenu("Lifestyle")} className={`${menu === "Lifestyle" ? "bg-black text-white py-1 px-4 rounded-sm" : ""}`}>Lifestyle</button>
       </div>
       <div className="flex flex-wrap justify-around gap-1 gap-y-7 mb-16 xl:mx-4">
-        {blog_data.filter(item => menu === "All" ? true : item.category === menu).map((blog) => (
-            <BlogItem key={blog.id} {...blog} />
+        {blogs.filter(item => menu === "All" ? true : item.category === menu).map((blog) => (
+            <BlogItem key={blog._id} {...blog} />
         ))}
       </div>
 

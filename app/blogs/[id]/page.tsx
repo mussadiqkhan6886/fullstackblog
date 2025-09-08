@@ -1,17 +1,32 @@
-import { blog_data } from '@/assets/assets';
+'use client';
+
 import Footer from '@/components/Footer';
 import GetStarted from '@/components/GetStarted';
 import Image from 'next/image';
-import React, { use } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { assets } from '@/assets/assets';
+import axios from 'axios';
 import { notFound } from 'next/navigation';
 
-const page = ({ params }: { params: Promise<{ id: string }> }) => {
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = use(params)
 
-    const filteredData = blog_data.find((item: Data) => item.id === parseInt(id))
+    const [data, setData] = useState<Data | null>(null)
 
-    if(!filteredData) notFound()
+    const fetchBlogs = async () => {
+      const response = await axios.get('/api/blog', {
+        params: {
+          id: id
+        }
+      })
+      setData(response.data)
+    }
+
+    useEffect(() => {
+      fetchBlogs()
+    }, [id, fetchBlogs])
+
+    if(!data) notFound()
 
   return (
     <>
@@ -19,15 +34,15 @@ const page = ({ params }: { params: Promise<{ id: string }> }) => {
     <section className='bg-gray-200 py-5 px-5 md:px-12 lg:pz-28'>
       <GetStarted />
       <div className="text-center my-24">
-        <h1 className='text-2xl sm:text-5xl font-semibold max-w-[700px] mx-auto'>{filteredData.title}</h1>
-        <Image priority={true} src={filteredData.author_img} alt='author image' width={60} height={60} className='mx-auto mt-6 border border-white rounded-full' />
-        <p className='mt-1 pb-2 text-lg max-w-[740px] mx-auto'>{filteredData.author}</p>
+        <h1 className='text-2xl sm:text-5xl font-semibold max-w-[700px] mx-auto'>{data.title}</h1>
+        <Image priority={true} src={data.authorimg} alt='author image' width={60} height={60} className='mx-auto mt-6 border border-white rounded-full' />
+        <p className='mt-1 pb-2 text-lg max-w-[740px] mx-auto'>{data.author}</p>
       </div>
     </section>
     <article className='mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10'>
-        <Image src={filteredData.image} width={1280} height={720} alt={"poster hero image"} />
+        <Image src={data.image} width={1280} height={720} alt={"poster hero image"} />
         <h1 className='my-8 text-[26px] font-semibold'>Introduction: </h1>
-        <p>{filteredData.description}</p>
+        <p>{data.description}</p>
         <h3 className="my-5 text-lg font-semibold">Step 1: Self</h3>
         <p className='my-3'>before</p>
         <h3 className="my-5 text-lg font-semibold">Step 1: Self</h3>
@@ -55,4 +70,5 @@ const page = ({ params }: { params: Promise<{ id: string }> }) => {
   )
 }
 
-export default page
+export default Page
+ 

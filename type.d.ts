@@ -1,10 +1,10 @@
 type Data = {
-    id: number
+    _id: number
     title: string
     description: string
     image:  StaticImageData
     date: number
     category: string
     author: string
-    author_img: StaticImageData
+    authorimg: StaticImageData
 }

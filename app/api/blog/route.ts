@@ -2,6 +2,7 @@ import { connectDB } from "@/lib/config/db"
 import { NextResponse } from "next/server"
 import { writeFile } from "fs/promises"
 import BlogModel from "@/lib/models/BlogModel"
+const fs = require("fs")
  
 const loadDB = async () => {
     await connectDB()
@@ -10,10 +11,26 @@ const loadDB = async () => {
 await loadDB()
 
 export const GET = async (req: Request) => {
-    const blogs = await BlogModel.find({})
+  try {
+    // Access query params from request URL
+    const { searchParams } = new URL(req.url);
+    const blogId = searchParams.get("id");
 
-    return NextResponse.json({blogs})
-}
+    if (blogId) {
+      const blog = await BlogModel.findById(blogId);
+      if (!blog) {
+        return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+      }
+      return NextResponse.json({ blog });
+    } else {
+      const blogs = await BlogModel.find({});
+      return NextResponse.json({ blogs });
+    }
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+};
 
 export const POST = async (req: Request) => {
     const formData = await req.formData()
@@ -40,3 +57,13 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json({success: true, msg:"Blog Added"})
 } 
+
+
+export const DELETE = async (req: Request) => {
+    const { searchParams } = new URL(req.url)
+    const id = await searchParams.get("id")
+    const blog = await BlogModel.findById(id)
+    fs.unlink(`./public${blog.image}`, () => {})
+    await BlogModel.findByIdAndDelete(id)
+    return NextResponse.json({msg: "Blog Deleted"})
+}
