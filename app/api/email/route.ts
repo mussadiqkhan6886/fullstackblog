@@ -8,6 +8,11 @@ const loadDB = async () => {
 
 loadDB()
 
+export async function GET(req: Request){
+    const emails = await EmailModel.find({})
+    return NextResponse.json({emails})
+}
+
 export async function POST(request: Request){
     const formData = await request.formData()
     const emailData = {
