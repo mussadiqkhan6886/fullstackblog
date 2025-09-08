@@ -8,7 +8,7 @@ const loadDB = async () => {
 
 loadDB()
 
-export async function GET(req: Request){
+export async function GET(){
     const emails = await EmailModel.find({})
     return NextResponse.json({emails})
 }

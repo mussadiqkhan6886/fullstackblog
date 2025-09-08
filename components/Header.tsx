@@ -29,8 +29,8 @@ const Header = () => {
         <h1 className='text-3xl sm:text-5xl font-medium'>Latest Blogs</h1>
         <p className='mt-10 max-w-[740px] m-auto text-sm sm:text-base'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos voluptate sit labore ea error. Voluptatem officiis qui saepe, modi ipsum laudantium eligendi ratione, natus, magnam dicta debitis rem quo nobis!</p>
         <form onSubmit={onSubmitHandler} className='flex justify-between max-w-[500px] scale-75 sm:scale-100 mx-auto mt-10 border border-black shadow-[-7px_7px_0px_#000]'>
-            <input onChange={(e) => setEmail(e.target.value)} value={email} type='email' placeholder='mussadiqkhan6886@gmail.com' className='pl-4 outline-none' />
-            <button type='submit' className='border-l border-black py-4 px-4 sm:px-8 active:bg-gray-600 active:text-white'>Subscribe</button>
+            <input onChange={(e) => setEmail(e.target.value)} value={email} type='email' placeholder='mussadiqkhan6886@gmail.com' className='pl-4 outline-none w-full' />
+            <button type='submit' className='border-l border-black py-4 px-4 sm:px-8 active:bg-gray-600 active:text-white hover:bg-gray-200 cursor-pointer'>Subscribe</button>
         </form>
       </div>
     </div>

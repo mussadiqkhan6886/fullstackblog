@@ -24,7 +24,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
 
     useEffect(() => {
       fetchBlogs()
-    }, [id, fetchBlogs])
+    }, [])
 
     if(!data) notFound()
 

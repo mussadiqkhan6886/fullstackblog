@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const page = () => {
+const Page = () => {
 
   const [emails, setEmails] = useState<Email[] | null>(null)
 
@@ -65,4 +65,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
