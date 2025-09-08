@@ -14,7 +14,7 @@ const page = () => {
     setEmails(res.data.emails)
   }
 
-  const handleDelete = async (mongoId){
+  const handleDelete = async (mongoId: number){
     const res = await axios.delete("/api/email", {
       params: {
         id: mongoId
