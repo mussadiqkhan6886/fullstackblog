@@ -6,5 +6,11 @@ type Data = {
     date: number
     category: string
     author: string
-    authorimg: StaticImageData
+    authorImg: StaticImageData
+}
+
+type Email = {
+    _id: number
+    email: string
+    date: number
 }

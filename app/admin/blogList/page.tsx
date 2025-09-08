@@ -2,12 +2,13 @@
 
 import BlogTableItem from "@/components/adminComponents/BlogTableItem";
 import axios from "axios";
+import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import {toast} from "react-toastify"
 
 const page = () => {
 
-    const [blogs, setBlogs] = useState([])
+    const [blogs, setBlogs] = useState<Data[] | null>(null)
 
     const fetchBlogs = async () => {
         const response = await axios.get("/api/blog")
@@ -27,6 +28,8 @@ const page = () => {
     useEffect(() => {
         fetchBlogs()
     }, [])
+
+    if(!blogs) notFound()
 
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">

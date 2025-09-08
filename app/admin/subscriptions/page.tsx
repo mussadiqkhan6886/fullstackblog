@@ -2,19 +2,20 @@
 
 import SubsTableItem from "@/components/adminComponents/SubsTableItem";
 import axios from "axios";
+import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const page = () => {
 
-  const [emails, setEmails] = useState([])
+  const [emails, setEmails] = useState<Email[] | null>(null)
 
   const fetchEmails = async () => {
     const res = await axios.get("/api/email")
     setEmails(res.data.emails)
   }
 
-  const handleDelete = async (mongoId: number){
+  const handleDelete = async (mongoId: number) => {
     const res = await axios.delete("/api/email", {
       params: {
         id: mongoId
@@ -32,6 +33,8 @@ const page = () => {
   useEffect(() => {
     fetchEmails()
   }, [])  
+
+  if(!emails) notFound()
 
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">

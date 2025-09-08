@@ -1,7 +1,16 @@
 import Image from 'next/image'
 import React from 'react'
 
-const BlogTableItem = ({authorImg, title, author, mongoId, date, deleteBlog} : Data) => {
+interface Props {
+  authorImg: string
+  title: string
+  author: string
+  date: number
+  mongoId: number
+  deleteBlog: (mongoId: number) => void
+}
+
+const BlogTableItem = ({authorImg, title, author, mongoId, date, deleteBlog} : Props) => {
     const BlogDate = new Date(date)
   return (
     <tr className='bg-white border-b'>
