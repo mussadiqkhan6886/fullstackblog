@@ -9,8 +9,10 @@ const loadDB = async () => {
 
 await loadDB()
 
-export const GET = () => {
+export const GET = async (req: Request) => {
+    const blogs = await BlogModel.find({})
 
+    return NextResponse.json({blogs})
 }
 
 export const POST = async (req: Request) => {
