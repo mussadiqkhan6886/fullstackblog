@@ -30,7 +30,7 @@ const BlogList = () => {
 
   return (
     <div>
-      <div className="flex justify-center gap-6 my-10">
+      <div className="flex justify-center gap-6 my-11">
         <button onClick={() => SetMenu("All")} className={`${menu === "All" ? "bg-black text-white rounded-sm duration-300 transition-all ease-in-out" : ""} py-1 px-4 cursor-pointer`}>All</button>
         <button onClick={() => SetMenu("Technology")} className={`${menu === "Technology" ? "bg-black text-white  rounded-sm duration-300 transition-all ease-in-out" : ""} py-1 px-4 cursor-pointer`}>Technology</button>
         <button onClick={() => SetMenu("Startup")} className={`${menu === "Startup" ? "bg-black text-white  rounded-sm duration-300 transition-all ease-in-out" : ""} py-1 px-4 cursor-pointer`}>Startup</button>
