@@ -6,28 +6,21 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import axios from "axios"
 import {toast} from "react-toastify"
 
-type Params = {
-    params: {
-        id: Promise<string>
-    }
-}
+const Page = async ({params}: {params: {id: string}}) => {
 
-const Page = async ({params}: Params) => {
-
-    const { id } = await params
+    const { id } =  params
 
     const fetchData = await axios.get("/api/blog", {
         params: {
             id
         }
     })
-    console.log(fetchData)
   const [image, setImage] = useState<File | null>(null)
   const [data, setData] = useState({
-    title: "",
-    description: "",
-    category: "Startup",
-    author: "Mussadiq khan",
+    title: fetchData.data.title,
+    description: fetchData.data.description,
+    category: fetchData.data.category,
+    author: fetchData.data.author,
     authorImg: "/profile_icon.png"
   })
 

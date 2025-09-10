@@ -17,6 +17,7 @@ const Page =  ({ params }: { params: { id: string } }) => {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get(`/api/blog?id=${id}`);
+      console.log(response.data)
       if (!response.data) return notFound();
       setData(response.data);
     } catch (error) {

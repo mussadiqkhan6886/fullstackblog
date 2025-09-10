@@ -24,7 +24,7 @@ const BlogTableItem = ({authorImg, title, author, mongoId, date, deleteBlog} : P
       <td className='px-6 py-4'>
         {BlogDate.toDateString()}
       </td>
-      <td onClick={() => deleteBlog(mongoId)} className='px-6 py-4 cursor-pointer'>
+      <td onClick={() => deleteBlog(mongoId)} className='px-6 flex flex-row gap-5 py-4 cursor-pointer'>
         <span>update</span>
         <span>x</span>
       </td>
