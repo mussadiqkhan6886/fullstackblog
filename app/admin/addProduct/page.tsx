@@ -44,8 +44,6 @@ const Page = () => {
     }else{
       toast.error("Error")
     }
-
-
   }
   
   return (
