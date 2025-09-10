@@ -9,7 +9,7 @@ import axios from 'axios';
 import { notFound } from 'next/navigation';
 
 
-const Page = async ({ params }: { params: { id: Promise<string> } }) => {
+const Page =  ({ params }: { params: { id: string } }) => {
   const {id} = params
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState(true);
