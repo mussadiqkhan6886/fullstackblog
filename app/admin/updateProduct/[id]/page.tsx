@@ -21,7 +21,7 @@ const Page = async ({params}: Params) => {
             id
         }
     })
-
+    console.log(fetchData)
   const [image, setImage] = useState<File | null>(null)
   const [data, setData] = useState({
     title: "",

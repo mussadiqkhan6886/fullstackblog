@@ -29,7 +29,7 @@ const Page = () => {
         fetchBlogs()
     }, [])
 
-    if(!blogs) notFound()
+    if(!blogs) return <div>No Blogs found</div>
 
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">
