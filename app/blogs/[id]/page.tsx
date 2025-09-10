@@ -11,10 +11,6 @@ import { notFound } from 'next/navigation';
 
 const Page = async ({ params }: { params: { id: Promise<string> } }) => {
   const {id} = params
-  console.log(id)
-  // const { id } = await params;
-  // console.log(id)
-
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState(true);
 
