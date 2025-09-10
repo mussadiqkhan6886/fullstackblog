@@ -6,7 +6,21 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import axios from "axios"
 import {toast} from "react-toastify"
 
-const Update = () => {
+type Params = {
+    params: {
+        id: Promise<string>
+    }
+}
+
+const Page = async ({params}: Params) => {
+
+    const { id } = await params
+
+    const fetchData = await axios.get("/api/blog", {
+        params: {
+            id
+        }
+    })
 
   const [image, setImage] = useState<File | null>(null)
   const [data, setData] = useState({
@@ -83,4 +97,4 @@ const Update = () => {
   )
 }
 
-export default Update
+export default Page
