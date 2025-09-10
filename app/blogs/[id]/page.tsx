@@ -8,16 +8,13 @@ import { assets } from '@/assets/assets';
 import axios from 'axios';
 import { notFound } from 'next/navigation';
 
-interface Data {
-  title: string;
-  author: string;
-  authorImg: string;
-  image: string;
-  description: string;
-}
 
-const Page = ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const Page = async ({ params }: { params: { id: Promise<string> } }) => {
+  const {id} = params
+  console.log(id)
+  // const { id } = await params;
+  // console.log(id)
+
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState(true);
 
