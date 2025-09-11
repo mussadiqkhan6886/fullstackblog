@@ -2,29 +2,28 @@
 
 import { assets } from "@/assets/assets";
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import axios from "axios"
 import {toast} from "react-toastify"
 import { notFound } from "next/navigation";
 
-const Page = ({params}: {params: {id: Promise<string>}}) => {
-
-    const { id } =  params
+const Page = ({params}: {params: Promise<{id: string}>}) => {
 
     const [fetchData, setFetchData] = useState<Data | null>(null)
 
-    const response = async () => {
+    const response = useCallback(async () => {
+      const id = (await params).id
      const res =  await axios.get("/api/blog", {
         params: {
             id
         }
     })
     setFetchData(res.data)
-    } 
+    } , []) 
 
     useEffect(() => {
       response()
-    }, [])
+    }, [response])
     
     if(!fetchData) notFound()
 

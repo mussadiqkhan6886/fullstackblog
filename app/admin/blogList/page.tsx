@@ -1,11 +1,8 @@
-'use client';
-
 import BlogTableItem from "@/components/adminComponents/BlogTableItem";
 import axios from "axios";
 import {toast} from "react-toastify"
 
 const Page = async () => {
-
 
     let response = await axios.get("http://localhost:3000/api/blog")
 

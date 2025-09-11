@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 const Page = async () => {
 
   let res = await axios.get("http://localhost:3000/api/email")
-  console.log(res.data)
    
   const handleDelete = async (mongoId: number) => {
     const response = await axios.delete("http://localhost:3000/api/email", {
@@ -45,7 +44,7 @@ const Page = async () => {
             </tr>
           </thead>
           <tbody>
-            {res.data.email.map((email: Email) => (
+            {res.data.emails.map((email: Email) => (
               <SubsTableItem key={email._id} email={email.email} date={email.date} mongoId={email._id} handleDelete={handleDelete}/>
             ))}
           </tbody>

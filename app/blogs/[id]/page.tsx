@@ -5,14 +5,10 @@ import { assets } from '@/assets/assets';
 import axios from 'axios';
 import { notFound } from 'next/navigation';
 
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
+type PageProps = Promise<{id: string}>
 
-const Page = async ({ params }: PageProps) => {
-  const { id } = params; // plain object, no warning
+const Page = async ({ params }: {params: PageProps}) => {
+  const id  = (await params).id; 
   const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog?id=${id}`);
   const blog = response.data;
 
