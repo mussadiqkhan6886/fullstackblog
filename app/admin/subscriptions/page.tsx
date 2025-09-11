@@ -1,40 +1,29 @@
-'use client';
-
 import SubsTableItem from "@/components/adminComponents/SubsTableItem";
 import axios from "axios";
 import { notFound } from "next/navigation";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const Page = () => {
+const Page = async () => {
 
-  const [emails, setEmails] = useState<Email[]>([])
-
-  const fetchEmails = async () => {
-    const res = await axios.get("/api/email")
-    setEmails(res.data)
-  }
-
+  let res = await axios.get("/api/email")
+   
   const handleDelete = async (mongoId: number) => {
-    const res = await axios.delete("/api/email", {
+    const response = await axios.delete("/api/email", {
       params: {
         id: mongoId
       }
     })
 
-    if(res.data.success){
-      toast.success(res.data.msg)
-      fetchEmails()
+    if(response.data.success){
+      toast.success(response.data.msg)
+      res = res.data.filer((sub: Email) => sub._id !== mongoId)
     }else{
       toast.error("Error")
     }
   }
 
-  useEffect(() => {
-    fetchEmails()
-  }, [])  
 
-  if(!emails) notFound()
+  if(!res.data) notFound()
 
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">
@@ -55,8 +44,8 @@ const Page = () => {
             </tr>
           </thead>
           <tbody>
-            {emails.map((email, index) => (
-              <SubsTableItem key={index} email={email.email} date={email.date} mongoId={email._id} handleDelete={handleDelete}/>
+            {res.data.map((email: Email) => (
+              <SubsTableItem key={email._id} email={email.email} date={email.date} mongoId={email._id} handleDelete={handleDelete}/>
             ))}
           </tbody>
         </table>

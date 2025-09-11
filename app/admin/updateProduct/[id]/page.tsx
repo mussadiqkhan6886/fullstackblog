@@ -2,25 +2,38 @@
 
 import { assets } from "@/assets/assets";
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios"
 import {toast} from "react-toastify"
+import { notFound } from "next/navigation";
 
-const Page = async ({params}: {params: {id: string}}) => {
+const Page = ({params}: {params: {id: Promise<string>}}) => {
 
     const { id } =  params
 
-    const fetchData = await axios.get("/api/blog", {
+    const [fetchData, setFetchData] = useState<Data | null>(null)
+
+    const response = async () => {
+     const res =  await axios.get("/api/blog", {
         params: {
             id
         }
     })
+    setFetchData(res.data)
+    } 
+
+    useEffect(() => {
+      response()
+    }, [])
+    
+    if(!fetchData) notFound()
+
   const [image, setImage] = useState<File | null>(null)
   const [data, setData] = useState({
-    title: fetchData.data.title,
-    description: fetchData.data.description,
-    category: fetchData.data.category,
-    author: fetchData.data.author,
+    title: fetchData.title,
+    description: fetchData.description,
+    category: fetchData.category,
+    author: fetchData.author,
     authorImg: "/profile_icon.png"
   })
 

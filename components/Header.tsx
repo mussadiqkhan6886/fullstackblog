@@ -1,3 +1,5 @@
+'use client';
+
 import React, { FormEvent, useState } from 'react'
 import GetStarted from './GetStarted'
 import axios from 'axios'

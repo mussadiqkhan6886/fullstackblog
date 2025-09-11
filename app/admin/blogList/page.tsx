@@ -1,19 +1,11 @@
-'use client';
-
 import BlogTableItem from "@/components/adminComponents/BlogTableItem";
 import axios from "axios";
-import { notFound } from "next/navigation";
-import { useEffect, useState } from "react";
 import {toast} from "react-toastify"
 
-const Page = () => {
+const Page = async () => {
 
-    const [blogs, setBlogs] = useState<Data[] | null>(null)
 
-    const fetchBlogs = async () => {
-        const response = await axios.get("/api/blog")
-        setBlogs(response.data)
-    }
+    let response = await axios.get("/api/blog")
 
     const deleteBlog = async (mongoId: number) => {
         const res  = await axios.delete("/api/blog", {
@@ -22,14 +14,11 @@ const Page = () => {
             }
         })
         toast.success(res.data.msg)
-        fetchBlogs()
+        response = response.data.filter((blog: Data) => blog._id !== mongoId)
     }
 
-    useEffect(() => {
-        fetchBlogs()
-    }, [])
 
-    if(!blogs) return <div>No Blogs found</div>
+    if(!response) return <div>No Blogs found</div>
 
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">
@@ -53,7 +42,7 @@ const Page = () => {
                 </tr>
             </thead>
             <tbody>
-                {blogs.map(blog => (
+                {response.data.map((blog: Data) => (
                     <BlogTableItem key={blog._id} authorImg={blog.authorImg} title={blog.title} author={blog.author} mongoId={blog._id} date={blog.date} deleteBlog={deleteBlog} />
                 ))}
             </tbody>

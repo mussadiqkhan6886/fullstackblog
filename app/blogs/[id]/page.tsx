@@ -1,39 +1,18 @@
-'use client';
-
 import Footer from '@/components/Footer';
 import GetStarted from '@/components/GetStarted';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { assets } from '@/assets/assets';
 import axios from 'axios';
 import { notFound } from 'next/navigation';
 
 
-const Page =  ({ params }: { params: { id: string } }) => {
+const Page = async  ({ params }: { params: { id: string } }) => {
   const {id} = params
-  const [data, setData] = useState<Data | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  const fetchBlogs = async () => {
-    try {
-      const response = await axios.get(`/api/blog?id=${id}`);
-      console.log(response.data)
-      if (!response.data) return notFound();
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-      notFound();
-    } finally {
-      setLoading(false);
-    }
-  };
+  const response = await axios.get(`/api/blog?id=${id}`);
+  if (!response.data) return notFound();
 
-  useEffect(() => {
-    fetchBlogs();
-  }, [id]);
-
-  if (loading) return <div>Loading...</div>;
-  if (!data) return notFound();
 
   return (
     <>
@@ -42,31 +21,31 @@ const Page =  ({ params }: { params: { id: string } }) => {
           <GetStarted />
           <div className="text-center my-24">
             <h1 className="text-2xl sm:text-5xl font-semibold max-w-[700px] mx-auto">
-              {data.title}
+              {response.data.title}
             </h1>
             <Image
               priority
-              src={data.authorImg}
+              src={response.data.authorImg}
               alt="author image"
               width={60}
               height={60}
               className="mx-auto mt-6 border border-white rounded-full"
             />
             <p className="mt-1 pb-2 text-lg max-w-[740px] mx-auto">
-              {data.author}
+              {response.data.author}
             </p>
           </div>
         </section>
         <article className="mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10">
           <Image
-            src={data.image}
+            src={response.data.image}
             width={1280}
             height={720}
             alt="poster hero image"
           />
           <div
             className="blog-content"
-            dangerouslySetInnerHTML={{ __html: data.description }}
+            dangerouslySetInnerHTML={{ __html: response.data.description }}
           />
           <div className="my-24">
             <p className="text-black font-semibold my-4">
