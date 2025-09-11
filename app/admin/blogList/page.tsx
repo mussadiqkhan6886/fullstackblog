@@ -1,3 +1,5 @@
+'use client';
+
 import BlogTableItem from "@/components/adminComponents/BlogTableItem";
 import axios from "axios";
 import {toast} from "react-toastify"
@@ -5,7 +7,7 @@ import {toast} from "react-toastify"
 const Page = async () => {
 
 
-    let response = await axios.get("/api/blog")
+    let response = await axios.get("http://localhost:3000/api/blog")
 
     const deleteBlog = async (mongoId: number) => {
         const res  = await axios.delete("/api/blog", {
