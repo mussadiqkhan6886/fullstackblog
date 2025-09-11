@@ -12,7 +12,7 @@ const BlogList = () => {
     const fetchBlogs = async () => {
       const response = await axios.get("/api/blog")
       console.log(response.data)
-      setBlogs(response.data.blogs)
+      setBlogs(response.data)
       // if network issue or other issue display no blogs found
       if(response.status !== 200){
         return <div>NO BLOGS FOUND</div>

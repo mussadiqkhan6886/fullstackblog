@@ -12,7 +12,7 @@ const Page = () => {
 
     const fetchBlogs = async () => {
         const response = await axios.get("/api/blog")
-        setBlogs(response.data.blogs)
+        setBlogs(response.data)
     }
 
     const deleteBlog = async (mongoId: number) => {

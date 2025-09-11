@@ -8,11 +8,11 @@ import { toast } from "react-toastify";
 
 const Page = () => {
 
-  const [emails, setEmails] = useState<Email[] | null>(null)
+  const [emails, setEmails] = useState<Email[]>([])
 
   const fetchEmails = async () => {
     const res = await axios.get("/api/email")
-    setEmails(res.data.emails)
+    setEmails(res.data)
   }
 
   const handleDelete = async (mongoId: number) => {
