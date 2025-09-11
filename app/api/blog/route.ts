@@ -12,9 +12,7 @@ await loadDB();
 // ----------------- GET -----------------
 export const GET = async (req: Request) => {
   try {
-    console.log(req)
     const { searchParams } = new URL(req.url);
-    console.log(searchParams)
     const blogId = searchParams.get("id");
 
     if (blogId) {
