@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import BlogItem from './BlogItem'
 import axios from 'axios';
 
@@ -37,11 +37,13 @@ const BlogList = () => {
         <button onClick={() => SetMenu("Startup")} className={`${menu === "Startup" ? "bg-black text-white  rounded-sm duration-300 transition-all ease-in-out" : ""} py-1 px-4 cursor-pointer`}>Startup</button>
         <button onClick={() => SetMenu("Lifestyle")} className={`${menu === "Lifestyle" ? "bg-black text-white  rounded-sm duration-300 transition-all ease-in-out" : ""} py-1 px-4 cursor-pointer`}>Lifestyle</button>
       </div>
-      <div className="flex flex-wrap justify-around gap-1 gap-y-7 mb-16 xl:mx-4">
-        {blogs.filter(item => menu === "All" ? true : item.category === menu).map((blog) => (
-            <BlogItem key={blog._id} {...blog} />
-        ))}
-      </div>
+      <Suspense fallback="loading...">
+        <div className="flex flex-wrap justify-around gap-1 gap-y-7 mb-16 xl:mx-4">
+          {blogs.filter(item => menu === "All" ? true : item.category === menu).map((blog) => (
+              <BlogItem key={blog._id} {...blog} />
+          ))}
+        </div>
+      </Suspense>
 
     </div>
   )

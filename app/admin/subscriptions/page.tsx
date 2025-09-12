@@ -1,3 +1,5 @@
+'use client';
+
 import SubsTableItem from "@/components/adminComponents/SubsTableItem";
 import axios from "axios";
 import { notFound } from "next/navigation";

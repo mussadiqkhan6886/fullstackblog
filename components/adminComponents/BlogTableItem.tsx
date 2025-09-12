@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image'
+import Link from 'next/link';
 import React from 'react'
 
 interface Props {
@@ -26,9 +27,9 @@ const BlogTableItem = ({authorImg, title, author, mongoId, date, deleteBlog} : P
       <td className='px-6 py-4'>
         {BlogDate.toDateString()}
       </td>
-      <td onClick={() => deleteBlog(mongoId)} className='px-6 flex flex-row gap-5 py-4 cursor-pointer'>
-        <span>update</span>
-        <span>x</span>
+      <td className='px-6 flex flex-row gap-5 py-4 cursor-pointer'>
+        <Link href={`/admin/updateProduct/${mongoId}`}>update</Link>
+        <span onClick={() => deleteBlog(mongoId)} >x</span>
       </td>
     </tr>
   )
