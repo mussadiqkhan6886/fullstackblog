@@ -4,7 +4,6 @@ import Image from "next/image";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { routerServerGlobal } from "next/dist/server/lib/router-utils/router-server-context";
 import { useRouter } from "next/navigation";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
@@ -49,6 +48,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
 
   useEffect(() => {
     fetchBlog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!fetchData) return <div>Not found</div>;

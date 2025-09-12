@@ -9,7 +9,7 @@ const Page = () => {
 
     const [data, setData] = useState<Data[] | null>(null)
     console.log(data)
-    let fetchData = async () => {
+    const fetchData = async () => {
         const response = await axios.get("http://localhost:3000/api/blog")
         setData(response.data)
     } 
