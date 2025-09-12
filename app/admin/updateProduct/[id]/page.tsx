@@ -4,6 +4,8 @@ import Image from "next/image";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { routerServerGlobal } from "next/dist/server/lib/router-utils/router-server-context";
+import { useRouter } from "next/navigation";
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   const [fetchData, setFetchData] = useState<Data | null>(null);
@@ -15,6 +17,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     author: "",
     authorImg: "/profile_icon.png",
   });
+  const router = useRouter()
 
   // fetch blog details
   const fetchBlog = async () => {
@@ -43,7 +46,6 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   }, [fetchData]);
 
-  console.log(data)
 
   useEffect(() => {
     fetchBlog();
@@ -57,29 +59,32 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("category", data.category);
-    formData.append("author", data.author);
-    formData.append("authorImg", data.authorImg);
-    if (image) formData.append("image", image);
+ const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("category", data.category);
+  formData.append("author", data.author);
+  formData.append("authorImg", data.authorImg);
+  if (image) formData.append("image", image);
 
-    try {
-      const res = await axios.post("/api/blog", formData);
-      if (res.data.success) {
-        toast.success(res.data.message);
-        setImage(null);
-      } else {
-        toast.error("Error updating blog");
-      }
-    } catch (err) {
-      toast.error("Request failed");
-      console.error(err);
+  try {
+    const id = (await params).id; // unwrap params
+    const res = await axios.put(`/api/blog?id=${id}`, formData);
+    if (res.data.success) {
+      toast.success(res.data.msg);
+      setImage(null);
+      router.push("/")
+    } else {
+      toast.error("Error updating blog");
     }
-  };
+  } catch (err) {
+    toast.error("Request failed");
+    console.error(err);
+  }
+};
+
 
   return (
     <form

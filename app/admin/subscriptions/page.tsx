@@ -2,34 +2,62 @@
 
 import SubsTableItem from "@/components/adminComponents/SubsTableItem";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const Page = async () => {
+type Email = {
+  _id: number;
+  email: string;
+  date: number;
+};
 
-  let res = await axios.get("http://localhost:3000/api/email")
-  console.log(res)
-   
-  const handleDelete = async (mongoId: number) => {
-    const response = await axios.delete("http://localhost:3000/api/email", {
-      params: {
-        id: mongoId
-      }
-    })
+type EmailResponse = {
+  emails: Email[];
+};
 
-    if(response.data.success){
-      toast.success(response.data.msg)
-      res = res.data.filer((sub: Email) => sub._id !== mongoId)
-    }else{
-      toast.error("Error")
+const Page = () => {
+  const [data, setData] = useState<EmailResponse | null>(null);
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/email");
+      setData(res.data);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to fetch emails");
     }
-  }
+  };
 
+  const handleDelete = async (mongoId: number) => {
+    try {
+      const response = await axios.delete("http://localhost:3000/api/email", {
+        params: { id: mongoId },
+      });
 
-  if(!res.data) return <div>Not found</div>
+      if (response.data.success) {
+        toast.success(response.data.msg);
+        // remove deleted email from state without reloading
+        setData((prev) =>
+          prev ? { emails: prev.emails.filter((e) => e._id !== mongoId) } : prev
+        );
+      } else {
+        toast.error("Error deleting email");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Request failed");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (!data) return <div>Not found</div>;
 
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">
-      <h1>All Subscriptions</h1>
+      <h1 className="text-xl font-bold">All Subscriptions</h1>
       <div className="relative max-w-[600px] h-[80vh] overflow-x-auto mt-4 border border-gray-400 scrollbar-hide">
         <table className="w-full text-sm text-gray-500">
           <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50">
@@ -37,7 +65,7 @@ const Page = async () => {
               <th scope="col" className="px-6 py-3">
                 Email Subscription
               </th>
-              <th scope="col" className="hidden sm:block px-6 py-3">
+              <th scope="col" className="hidden sm:table-cell px-6 py-3">
                 Date
               </th>
               <th scope="col" className="px-6 py-3">
@@ -46,14 +74,20 @@ const Page = async () => {
             </tr>
           </thead>
           <tbody>
-            {res.data.emails.map((email: Email) => (
-              <SubsTableItem key={email._id} email={email.email} date={email.date} mongoId={email._id} handleDelete={handleDelete}/>
+            {data.emails.map((email) => (
+              <SubsTableItem
+                key={email._id}
+                email={email.email}
+                date={email.date}
+                mongoId={email._id}
+                handleDelete={handleDelete}
+              />
             ))}
           </tbody>
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
