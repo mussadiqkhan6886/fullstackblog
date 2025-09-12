@@ -2,12 +2,12 @@
 
 import SubsTableItem from "@/components/adminComponents/SubsTableItem";
 import axios from "axios";
-import { notFound } from "next/navigation";
 import { toast } from "react-toastify";
 
 const Page = async () => {
 
   let res = await axios.get("http://localhost:3000/api/email")
+  console.log(res)
    
   const handleDelete = async (mongoId: number) => {
     const response = await axios.delete("http://localhost:3000/api/email", {
@@ -25,7 +25,7 @@ const Page = async () => {
   }
 
 
-  if(!res.data) notFound()
+  if(!res.data) return <div>Not found</div>
 
   return (
     <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">

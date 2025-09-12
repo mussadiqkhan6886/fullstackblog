@@ -1,6 +1,5 @@
 'use client';
 
-import { assets } from "@/assets/assets";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
@@ -134,9 +133,9 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
         name="category"
         className="w-40 mt-4 px-3 py-4 border text-gray-500"
       >
-        <option value="startup">Startup</option>
-        <option value="technology">Technology</option>
-        <option value="lifestyle">Lifestyle</option>
+        <option value="Startup">Startup</option>
+        <option value="Technology">Technology</option>
+        <option value="Lifestyle">Lifestyle</option>
       </select>
 
       <br />
